@@ -142,10 +142,12 @@
 </div>
 
 <script>
+    let params = (new URL(document.location)).searchParams;
+    data = params.get("data");
+    console.log(data)
     function create_url() {
         let params = (new URL(document.location)).searchParams;
         data = params.get("data");
-        console.log(data)
         location.href=`https://dreamy-pika-faa82a.netlify.app/?data=${data}`
     }
 
