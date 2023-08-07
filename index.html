@@ -148,6 +148,7 @@
     function create_url() {
         let params = (new URL(document.location)).searchParams;
         data = params.get("data");
+        data = data + "10"
         location.href=`https://dreamy-pika-faa82a.netlify.app/?data=${data}`
     }
 
