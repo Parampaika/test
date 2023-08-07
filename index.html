@@ -134,25 +134,49 @@
                 <div>
                     <h2 id="popup_title___9HZeTLt" class="popup_title">Congrats!</h2>
                     <span id="popup_subtitle___9HZeTLt" class="popup_subtitle">Your solution is correct</span>
-                    <button onclick="create_url()" type="button">Тест</button>
+                    <button type="button" id="next_button">Тест</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC0zVWLVhhoHP1Idv7w8JhrgqRuXOOG76k",
+      authDomain: "jobbe-online.firebaseapp.com",
+      projectId: "jobbe-online",
+      storageBucket: "jobbe-online.appspot.com",
+      messagingSenderId: "109168349675",
+      appId: "1:109168349675:web:03cadb4ea9878e60edc9ae",
+      measurementId: "G-R6DCMCLRN6"
+    };
+    const app = initializeApp(firebaseConfig);
+
+    import {getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
+    const db = getFirestore(app);
+    window.collection = collection;
+    window.db = db;
+    window.addDoc = addDoc;
+
+  </script>
+
 <script>
     let params = (new URL(document.location)).searchParams;
     data = params.get("data");
     console.log(data)
+
     function create_url() {
         let params = (new URL(document.location)).searchParams;
         data = params.get("data");
         data = data + "10"
         location.href=`https://dreamy-pika-faa82a.netlify.app/?data=${data}`
     }
-
 </script>
+
 
 <script>
     const closePopup___9HZeTLt = () => {
@@ -4139,6 +4163,15 @@ function sendLog(interactiveContext, analyticsContext, attemptStatus) {
     console.log(payload)
     const blob = new Blob([JSON.stringify(payload)], headers)
     navigator.sendBeacon(loggerURL, blob)
+
+    db = window.db;
+    collection = window.collection;
+    addDoc = window.addDoc;
+    var citiesRef = collection(db, "user");
+
+    addDoc(citiesRef, {
+        name: "бяка"
+    })
 }
     </script>
 

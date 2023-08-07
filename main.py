@@ -1,16 +1,49 @@
-# This is a sample Python script.
+import logging
+from os import getenv
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from aiohttp.web import run_app
+from aiohttp.web_app import Application
+from handlers import my_router
+from routes import check_data_handler, demo_handler, send_message_handler
+
+from aiogram import Bot, Dispatcher
+from aiogram.types import MenuButtonWebApp, WebAppInfo
+from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
+
+TELEGRAM_TOKEN = getenv("TELEGRAM_TOKEN")
+APP_BASE_URL = getenv("APP_BASE_URL")
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+async def on_startup(bot: Bot, base_url: str):
+    await bot.set_webhook(f"{base_url}/webhook")
+    await bot.set_chat_menu_button(
+        menu_button=MenuButtonWebApp(text="Open Menu", web_app=WebAppInfo(url=f"{base_url}/demo"))
+    )
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def main():
+    bot = Bot(token=TELEGRAM_TOKEN, parse_mode="HTML")
+    dispatcher = Dispatcher()
+    dispatcher["base_url"] = APP_BASE_URL
+    dispatcher.startup.register(on_startup)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    dispatcher.include_router(my_router)
+
+    app = Application()
+    app["bot"] = bot
+
+    app.router.add_get("/demo", demo_handler)
+    app.router.add_post("/demo/checkData", check_data_handler)
+    app.router.add_post("/demo/sendMessage", send_message_handler)
+    SimpleRequestHandler(
+        dispatcher=dispatcher,
+        bot=bot,
+    ).register(app, path="/webhook")
+    setup_application(app, dispatcher, bot=bot)
+
+    run_app(app, host="127.0.0.1", port=8081)
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    main()
