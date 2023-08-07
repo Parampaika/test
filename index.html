@@ -134,12 +134,18 @@
                 <div>
                     <h2 id="popup_title___9HZeTLt" class="popup_title">Congrats!</h2>
                     <span id="popup_subtitle___9HZeTLt" class="popup_subtitle">Your solution is correct</span>
-                    <button onclick="location.href='https://www.google.com/'" type="button">Тест</button>
+                    <button onclick="location.href='https://www.google.com/'" type="button" id="myAnchor">Тест</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<script>
+    let params = (new URL(document.location)).searchParams;
+    console.log(params.get("data"));
+</script>
 
 <script>
     const closePopup___9HZeTLt = () => {
