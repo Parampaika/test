@@ -135,6 +135,9 @@
                     <span id="popup_subtitle___9HZeTLt" class="popup_subtitle">Your solution is correct</span>
                     <button type="button" id="next_button" onclick="create_url()">Тест</button>
                     <a href="https://dreamy-pika-faa82a.netlify.app">Link</a>
+                    <ul>
+                        <li><a id="regular_link" href="">Regular link #2</a> (opens inside webview)</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -169,37 +172,39 @@
     data = params.get("data");
     console.log(data)
 
-    // Получаем ссылки на все ссылки на странице
-    var links = document.getElementsByTagName('a');
+    // // Получаем ссылки на все ссылки на странице
+    // var links = document.getElementsByTagName('a');
 
-    // Перебираем все ссылки и добавляем обработчик события клика
-    for (var i = 0; i < links.length; i++) {
-        links[i].addEventListener('click', function(event) {
-            event.preventDefault(); // Предотвращаем переход по ссылке
+    // // Перебираем все ссылки и добавляем обработчик события клика
+    // for (var i = 0; i < links.length; i++) {
+    //     links[i].addEventListener('click', function(event) {
+    //         event.preventDefault(); // Предотвращаем переход по ссылке
 
-            // Получаем URL, на который должны перейти
-            var url = this.getAttribute('href');
+    //         // Получаем URL, на который должны перейти
+    //         var url = this.getAttribute('href');
 
-            // Выполняем AJAX-запрос на сервер для получения контента страницы
-            var xhr = new XMLHttpRequest();
-            var params = "data=byaka";
-            xhr.open('GET', url + "?" + params, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // Обновляем содержимое текущей страницы с полученным контентом
-                    var content = xhr.responseText;
-                    // document.getElementById('content').innerHTML = content;
-                    var currentPage = window.location.href;
+    //         // Выполняем AJAX-запрос на сервер для получения контента страницы
+    //         var xhr = new XMLHttpRequest();
+    //         var params = "data=byaka";
+    //         xhr.open('GET', url + "?" + params, true);
+    //         xhr.onreadystatechange = function() {
+    //             if (xhr.readyState === 4 && xhr.status === 200) {
+    //                 // Обновляем содержимое текущей страницы с полученным контентом
+    //                 var content = xhr.responseText;
+    //                 // document.getElementById('content').innerHTML = content;
+    //                 var currentPage = window.location.href;
 
-                    // Замена содержимого текущей страницы новым контентом
-                    document.open();
-                    document.write(content);
-                    document.close();
-                }
-            };
-            xhr.send();
-        });
-    }
+    //                 // Замена содержимого текущей страницы новым контентом
+    //                 document.open();
+    //                 document.write(content);
+    //                 document.close();
+    //             }
+    //         };
+    //         xhr.send();
+    //     });
+    // }
+
+    document.getElementById('regular_link').setAttribute('href', "https://in.interactiver.online/b6fc86f8-4bf9-4dcc-b1d5-977e61c35a54");
 
     function create_url() {
         let params = (new URL(document.location)).searchParams;
