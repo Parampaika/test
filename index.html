@@ -134,7 +134,7 @@
                     <h2 id="popup_title___9HZeTLt" class="popup_title">Congrats!</h2>
                     <span id="popup_subtitle___9HZeTLt" class="popup_subtitle">Your solution is correct</span>
                     <button type="button" id="next_button" onclick="create_url()">Тест</button>
-                    <a href="index2.html">Link</a>
+                    <a>Link</a>
                 </div>
             </div>
         </div>
@@ -169,12 +169,14 @@
     data = params.get("data");
     console.log(data)
 
-    // Получаем ссылки на все ссылки на странице
-    var links = document.getElementsByTagName('a');
+    function create_url() {
+        let params = (new URL(document.location)).searchParams;
+        data = params.get("data");
+        console.log(data)
+        data = data + "10"
+        link=`https://in.interactiver.online/b6fc86f8-4bf9-4dcc-b1d5-977e61c35a54?data=${data}`
 
-    // Перебираем все ссылки и добавляем обработчик события клика
-    for (var i = 0; i < links.length; i++) {
-        links[i].addEventListener('click', function(event) {
+        link.addEventListener('click', function(event) {
             event.preventDefault(); // Предотвращаем переход по ссылке
 
             // Получаем URL, на который должны перейти
@@ -199,12 +201,13 @@
         });
     }
 
-    function create_url() {
-        let params = (new URL(document.location)).searchParams;
-        data = params.get("data");
-        data = data + "10"
-        location.href="https://in.interactiver.online/b6fc86f8-4bf9-4dcc-b1d5-977e61c35a54"
-    }
+
+    // function create_url() {
+    //     let params = (new URL(document.location)).searchParams;
+    //     data = params.get("data");
+    //     data = data + "10"
+    //     location.href=`https://in.interactiver.online/b6fc86f8-4bf9-4dcc-b1d5-977e61c35a54?data=${data}`
+    // }
 </script>
 
 
