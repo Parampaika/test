@@ -17,7 +17,6 @@
 <!--Copyright (c) 2019 LottieFiles.com-->
 
 <!-- @license -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -135,7 +134,7 @@
                     <h2 id="popup_title___9HZeTLt" class="popup_title">Congrats!</h2>
                     <span id="popup_subtitle___9HZeTLt" class="popup_subtitle">Your solution is correct</span>
                     <button type="button" id="next_button" onclick="create_url()">Тест</button>
-                    <a href="demo.html">Как создавать ссылки в HTML</a>
+                    <a href="https://in.interactiver.online/b6fc86f8-4bf9-4dcc-b1d5-977e61c35a54">Link</a>
                 </div>
             </div>
         </div>
@@ -170,6 +169,36 @@
     data = params.get("data");
     console.log(data)
 
+    // Получаем ссылки на все ссылки на странице
+    var links = document.getElementsByTagName('a');
+
+    // Перебираем все ссылки и добавляем обработчик события клика
+    for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener('click', function(event) {
+            event.preventDefault(); // Предотвращаем переход по ссылке
+
+            // Получаем URL, на который должны перейти
+            var url = this.getAttribute('href');
+
+            // Выполняем AJAX-запрос на сервер для получения контента страницы
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Обновляем содержимое текущей страницы с полученным контентом
+                    var content = xhr.responseText;
+                    // document.getElementById('content').innerHTML = content;
+                    var currentPage = window.location.href;
+                    // Замена содержимого текущей страницы новым контентом
+                    document.open();
+                    document.write(content);
+                    document.close();
+                }
+            };
+            xhr.send();
+        });
+    }
+
     function create_url() {
         let params = (new URL(document.location)).searchParams;
         data = params.get("data");
@@ -196,7 +225,6 @@
         }
     });
 </script>
-
     <div id="konva_interactive_container___9HZeTLt"></div>
 
     <script src="https://unpkg.com/konva@8/konva.min.js"></script>
