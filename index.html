@@ -204,7 +204,7 @@
     //     });
     // }
 
-    document.getElementById('regular_link').setAttribute('href', "https://in.interactiver.online/b6fc86f8-4bf9-4dcc-b1d5-977e61c35a54");
+    document.getElementById('regular_link').setAttribute('href',  document.getElementById('regular_link').getAttribute('href') + location.hash);
 
     function create_url() {
         let params = (new URL(document.location)).searchParams;
